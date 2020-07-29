@@ -66,6 +66,11 @@ input {
   margin: 1%;
 }
 
+input:focus {
+  -webkit-box-shadow: 2px 2px 20px #5d5e5e;
+          box-shadow: 2px 2px 20px #5d5e5e;
+}
+
 .input__radio {
   height: auto;
 }
