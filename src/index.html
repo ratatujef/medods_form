@@ -14,71 +14,94 @@
 
     <section class="window">
         <h1 class="title">форма создания клиента</h1>
-        <form action="#" class="form" method="POST" name="sign-up"></form>
+        <form action="#" class="form" method="POST" v-on:submit.prevent="validate" id="app" name="sign-up">
         <div class="container">
-
             <div class="general-info">
                 <h2 class="subtitle"> Основная информация</h2>
-                <input type="text" name="surname" required placeholder="Фамилия" class="input_size_middle">
-                <input type="text" name="firstName" required placeholder="Имя" class="input_size_middle">
-                <input type="text" name="patronymic" placeholder="Отчество" class="input_size_middle">
-
-                <input type="date" name="birthday" required class="input_size_small">
-                <input type="tel" name="tel" required pattern="[0-9]{10}" placeholder="+7 (   )   -  -  "
+                <input type="text" name="surname" v-model="surname" placeholder="Фамилия" class="input_size_middle">
+                <div class="error" v-if="errors.surname"> {{errors.surname}}</div>
+                <input type="text" name="firstname" v-model="firstname" placeholder="Имя" class="input_size_middle">
+                <div class="error" v-if="errors.firstname"> {{errors.firstname}}</div>
+                <input type="text" name="patronymic" v-model="patronymic" placeholder="Отчество" class="input_size_middle">
+                <div class="error" v-if="errors.patronymic"> {{errors.patronymic}}</div>
+                <input type="date" name="birthday" v-model="birthday" class="input_size_small">
+                <div class="error" v-if="errors.date">{{errors.date}}</div>
+                <input type="tel" name="tel"  v-model="tel" maxlength="12" pattern="[+]{1}[0-9]{11}" placeholder="+7 (999)999-99-99"
                     class="input_size_small">
+                    <div class="error" v-if="errors.tel">{{errors.tel}}</div>
                 <div class="general-sex">
-                    <input class="input__radio" type="radio" id="man" name="sex">
-                    <label for="man">Муж</label>
-                    <input class="input__radio" type="radio" id="woman" name="sex">
-                    <label for="woman">Жен</label>
-                </div>
+                    <label for="man">
+                        <input class="input__radio" v-model="sex" value="man" type="radio" id="man" name="sex">
+                        <span>Муж</span></label>
+                    
+                    <label for="woman">
+                        <input class="input__radio" v-model="sex" value="woman" type="radio" id="woman" name="sex">
+                        <span>Жен</span></label>
+                </div> 
+                <div class="error" v-if="errors.sex">{{errors.sex}}</div>
 
-                <select name="group" id="group" class="selector" required>
+                <select name="group" id="group" v-model="group" class="selector">
                     <option value="">Группа клиентов</option>
-                    <option value="vip">VIP</option>
-                    <option value="problem">Проблемные</option>
-                    <option value="oms">ОМС</option>
+                    <option value="VIP">VIP</option>
+                    <option value="Проблемные">Проблемные</option>
+                    <option value="ОМС">ОМС</option>
                 </select>
-                <select name="doctor" id="doctor" class="selector">
+                <div class="error" v-if="errors.group">{{errors.group}}</div>
+                <select name="doctor" id="doctor" v-model="doctor" class="selector">
                     <option value="">Лечащий врач</option>
-                    <option value="ivanov">Иванов</option>
-                    <option value="zaharov">Захаров</option>
-                    <option value="chernysheva">Чернышева</option>
+                    <option value="Иванов">Иванов</option>
+                    <option value="Захаров">Захаров</option>
+                    <option value="Чернышева">Чернышева</option>
                 </select>
                 <label for="sms">
-                    <input class="input__radio" type="checkbox" id="sms">
+                    <input class="input__radio"  v-model="sms" type="checkbox" id="sms">
                     <span>Не отправлять СМС</span></label>
             </div>
 
             <div class="adress">
                 <h2 class="subtitle"> Адрес </h2>
-                <input type="number" name="index" minlength="6" maxlength="6" placeholder="индекс"
+                <input type="number" name="index" v-model="index" minlength="6" maxlength="6" placeholder="индекс"
                     class="input_size_small">
-                <input type="text" name="country" placeholder="Страна" class="input_size_middle">
-                <input type="text" name="district" placeholder="Область" class="input_size_middle">
-                <input type="text" name="city" required placeholder="Город" class="input_size_middle">
-                <input type="text" name="street" placeholder="Улица" class="input_size_large">
-                <input type="text" name="build" placeholder="Дом" class="input_size_small">
+                    <div class="error" v-if="errors.index">{{errors.index}}</div>
+                <input type="text" name="country" v-model="country" placeholder="Страна" class="input_size_middle">
+                <div class="error" v-if="errors.country">{{errors.country}}</div>
+                <input type="text" name="district" v-model="district" placeholder="Область" class="input_size_middle">
+                <div class="error" v-if="errors.district">{{errors.district}}</div>
+                <input type="text" name="city" v-model="city" placeholder="Город" class="input_size_middle">
+                <div class="error" v-if="errors.city">{{errors.city}}</div>
+                <input type="text" name="street" v-model="street" placeholder="Улица" class="input_size_large">
+                <div class="error" v-if="errors.street">{{errors.street}}</div>
+                <input type="text" name="build" v-model="build" placeholder="Дом" class="input_size_small">
+                <div class="error" v-if="errors.build">{{errors.build}}</div>
             </div>
             <div class="document">
                 <h2 class="subtitle">Документ</h2>
 
-                <select name="doctype" id="doctype" required class="selector">
-                    <option value=""> Тип документа</option>
-                    <option value="passport"> Паспорт</option>
-                    <option value="certificateOfBirth"> Свидетельство о рождении</option>
-                    <option value="driverCard"> Вод. удостоверение</option>
+                <select name="doctype" id="doctype" v-model="doctype" class="selector">
+                    <option  value=""> Тип документа</option>
+                    <option value="Паспорт"> Паспорт</option>
+                    <option value="Свидетельство о рождении"> Свидетельство о рождении</option>
+                    <option value="Вод. удостоверение">Вод. удостоверение</option>
                 </select>
-                <input type="text" name="documentSerie" placeholder="Серия" class="input_size_small">
-                <input type="number" name="documentNum" placeholder="Номер" class="input_size_small">
-                <input type="text" name="issue" placeholder="Кем выдан" class="input_size_large">
-                <input type="date" name="IssueDate" required class="input_size_small">
+                <div class="error" v-if="errors.doctype">{{errors.doctype}}</div>
+                <input type="text" name="documentSerie" v-model="documentSerie" placeholder="Серия" class="input_size_small">
+                
+                <div class="error" v-if="errors.documentSerie">{{errors.documentSerie}}</div>
+                <input type="number" name="documentNum" v-model="documentNum" placeholder="Номер" class="input_size_small">
+                
+                <div class="error" v-if="errors.documentNum">{{errors.documentNum}}</div>
+                <input type="text" name="issue" v-model="issue" placeholder="Кем выдан" class="input_size_large">
+                
+                <div class="error" v-if="errors.issue">{{errors.issue}}</div>
+                <input type="date" name="IssueDate" v-model="IssueDate" class="input_size_small">
+                <div class="error" v-if="errors.issueDate">{{errors.issueDate}}</div>
             </div>
 
         </div>
-        <input type="submit" class="btn " value="Отправить">
+        <input type="submit"  v-model="btn" class="btn" value="Отправить">
         </form>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/script.js"></script>
 </body>
 
