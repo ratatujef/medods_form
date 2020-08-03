@@ -15,92 +15,108 @@
     <section class="window">
         <h1 class="title">форма создания клиента</h1>
         <form action="#" class="form" method="POST" v-on:submit.prevent="validation" id="app" name="sign-up">
-        <div class="container">
-            <div class="general-info">
-                <h2 class="subtitle"> Основная информация</h2>
-                <div>{{...errors}}</div>
-                <input type="text" name="surname" @blur="touched.surname=true" v-model.lazy="post.surname" :class="{'valid': !invalidSurname, 'invalid': invalidSurname}" placeholder="Фамилия" class="input_size_middle">
-                <div class="error" v-if='invalidSurname'> Проверьте Фамилию</div>
-                <input type="text" name="firstname" @blur="touched.firstname=true" v-model.lazy="post.firstname" placeholder="Имя" class="input_size_middle">
-                <div class="error" v-if="invalidFirstname"> Проверьте Имя</div>
-                <input type="text" name="patronymic" @blur="touched.patronymic=true" v-model.lazy="post.patronymic" placeholder="Отчество" class="input_size_middle">
-                <div class="error" v-if="invalidPatronymic"> Проверьте отчество</div>
-                <input type="date" name="birthday"  min="1920-01-01" max="2020-07-31" @blur="touched.birthday=true"  v-model.lazy="post.birthday" class="input_size_small">
-                
-                <input type="tel" name="tel"  @blur="touched.tel=true" v-model.lazy="post.tel" maxlength="12" pattern="[+]{1}[0-9]{11}" placeholder="+7 (999)999-99-99"
-                    class="input_size_small">
+            <div class="container">
+                <div class="general-info">
+                    <h2 class="subtitle"> Основная информация</h2>
+                    <div v-for="error in errors">{{rrors}}</div>
+                    <input type="text" name="surname" @blur="touched.surname=true" v-model.lazy="post.surname"
+                        :class="{'valid': !invalidSurname, 'invalid': invalidSurname}" placeholder="Фамилия"
+                        class="input_size_middle">
+                    <div class="error" v-if='invalidSurname'> Проверьте Фамилию</div>
+                    <input type="text" name="firstname" @blur="touched.firstname=true" v-model.lazy="post.firstname"
+                        placeholder="Имя" class="input_size_middle">
+                    <div class="error" v-if="invalidFirstname"> Проверьте Имя</div>
+                    <input type="text" name="patronymic" @blur="touched.patronymic=true" v-model.lazy="post.patronymic"
+                        placeholder="Отчество" class="input_size_middle">
+                    <div class="error" v-if="invalidPatronymic"> Проверьте отчество</div>
+                    <input type="date" name="birthday" min="1920-01-01" max="2020-07-31" @blur="touched.birthday=true"
+                        v-model.lazy="post.birthday" class="input_size_small">
+
+                    <input type="tel" name="tel" @blur="touched.tel=true" v-model.lazy="post.tel" maxlength="12"
+                        pattern="[+]{1}[0-9]{11}" placeholder="+7 (999)999-99-99" class="input_size_small">
                     <div class="error" v-if="invalidTel">Введите телефон в формате +77777777777</div>
-                <div class="general-sex">
-                    <label for="man">
-                        <input class="input__radio" v-model="post.sex" value="man" type="radio" id="man" name="sex">
-                        <span>Муж</span></label>
-                    
-                    <label for="woman">
-                        <input class="input__radio" v-model="post.sex" value="woman" type="radio" id="woman" name="sex">
-                        <span>Жен</span></label>
-                </div> 
-                <div class="error" v-if="invalidSex">укажите пол</div>
+                    <div class="general-sex">
+                        <label for="man">
+                            <input class="input__radio" v-model="post.sex" value="man" type="radio" id="man" name="sex">
+                            <span>Муж</span></label>
 
-                <select name="group" id="group" v-model="post.group"  @blur="touched.group=true" class="selector">
-                    <option value="">Группа клиентов</option>
-                    <option value="VIP">VIP</option>
-                    <option value="Проблемные">Проблемные</option>
-                    <option value="ОМС">ОМС</option>
-                </select>
-        
-                <div class="error" v-if="invalidGroup">Выберите группу клиентов</div>
-                <select name="doctor" id="doctor" v-model="post.doctor"  @blur="touched.doctor=true"class="selector">
-                    <option value="">Лечащий врач</option>
-                    <option value="Иванов">Иванов</option>
-                    <option value="Захаров">Захаров</option>
-                    <option value="Чернышева">Чернышева</option>
-                </select>
-                <label for="sms">
-                    <input class="input__radio"  v-model="post.sms" type="checkbox" id="sms">
-                    <span>Не отправлять СМС</span></label>
-            </div>
+                        <label for="woman">
+                            <input class="input__radio" v-model="post.sex" value="woman" type="radio" id="woman"
+                                name="sex">
+                            <span>Жен</span></label>
+                    </div>
+                    <div class="error" v-if="invalidSex">укажите пол</div>
 
-            <div class="adress">
-                <h2 class="subtitle"> Адрес </h2>
-                <input type="number" name="index" v-model.lazy="post.index"  @blur="touched.index=true" placeholder="индекс"
-                    class="input_size_small">
+                    <select name="group" id="group" v-model="post.group" @blur="touched.group=true" class="selector">
+                        <option value="">Группа клиентов</option>
+                        <option value="VIP">VIP</option>
+                        <option value="Проблемные">Проблемные</option>
+                        <option value="ОМС">ОМС</option>
+                    </select>
+
+                    <div class="error" v-if="invalidGroup">Выберите группу клиентов</div>
+                    <select name="doctor" id="doctor" v-model="post.doctor" @blur="touched.doctor=true"
+                        class="selector">
+                        <option value="">Лечащий врач</option>
+                        <option value="Иванов">Иванов</option>
+                        <option value="Захаров">Захаров</option>
+                        <option value="Чернышева">Чернышева</option>
+                    </select>
+                    <label for="sms">
+                        <input class="input__radio" v-model="post.sms" type="checkbox" id="sms">
+                        <span>Не отправлять СМС</span></label>
+                </div>
+
+                <div class="adress">
+                    <h2 class="subtitle"> Адрес </h2>
+                    <input type="number" name="index" v-model.lazy="post.index" @blur="touched.index=true"
+                        placeholder="индекс" class="input_size_small">
                     <div class="error" v-if="invalidIndex">Проверьте индекс</div>
-                <input type="text" name="country" v-model.lazy="post.country"  @blur="touched.country=true" placeholder="Страна" class="input_size_middle">
-                <div class="error" v-if="invalidCountry">Проверьте введенные данныее</div>
-                <input type="text" name="district" v-model.lazy="post.district"  @blur="touched.district=true"placeholder="Область" class="input_size_middle">
-                <div class="error" v-if="invalidDistrict">Проверьте введенные данные</div>
-                <input type="text" name="city" v-model.lazy="post.city"  @blur="touched.city=true" placeholder="Город" class="input_size_middle">
-                <div class="error" v-if="invalidCity">Проверьте введенные данные</div>
-                <input type="text" name="street" v-model.lazy="post.street"  @blur="touched.street=true" placeholder="Улица" class="input_size_large">
-                <div class="error" v-if="invalidStreet">Проверьте введенные данные</div>
-                <input type="text" name="build" v-model.lazy="post.build"  @blur="touched.build=true" placeholder="Дом" class="input_size_small">
-                <div class="error" v-if="invalidBuild">Проверьте введенные данные</div>
-            </div>
-            <div class="document">
-                <h2 class="subtitle">Документ</h2>
+                    <input type="text" name="country" v-model.lazy="post.country" @blur="touched.country=true"
+                        placeholder="Страна" class="input_size_middle">
+                    <div class="error" v-if="invalidCountry">Проверьте введенные данныее</div>
+                    <input type="text" name="district" v-model.lazy="post.district" @blur="touched.district=true"
+                        placeholder="Область" class="input_size_middle">
+                    <div class="error" v-if="invalidDistrict">Проверьте введенные данные</div>
+                    <input type="text" name="city" v-model.lazy="post.city" @blur="touched.city=true"
+                        placeholder="Город" class="input_size_middle">
+                    <div class="error" v-if="invalidCity">Проверьте введенные данные</div>
+                    <input type="text" name="street" v-model.lazy="post.street" @blur="touched.street=true"
+                        placeholder="Улица" class="input_size_large">
+                    <div class="error" v-if="invalidStreet">Проверьте введенные данные</div>
+                    <input type="text" name="build" v-model.lazy="post.build" @blur="touched.build=true"
+                        placeholder="Дом" class="input_size_small">
+                    <div class="error" v-if="invalidBuild">Проверьте введенные данные</div>
+                </div>
+                <div class="document">
+                    <h2 class="subtitle">Документ</h2>
 
-                <select name="doctype" id="doctype" v-model="post.doctype" class="selector">
-                    <option  value=""> Тип документа</option>
-                    <option value="Паспорт"> Паспорт</option>
-                    <option value="Свидетельство о рождении"> Свидетельство о рождении</option>
-                    <option value="Вод. удостоверение">Вод. удостоверение</option>
-                </select>
-                <div class="error" v-if="invalidDoctype">Выберите тип документа</div>
-                <input type="text" name="documentSerie" v-model.lazy="post.documentSerie"  @blur="touched.documentSerie=true" placeholder="Серия" class="input_size_small">
-                
-                <div class="error" v-if="invalidDocumentSerie">Проверьте введенные данные</div>
-                <input type="number" name="documentNum" v-model.lazy="post.documentNum" @blur="touched.documentNum=true"placeholder="Номер" class="input_size_small">
-                
-                <div class="error" v-if="invalidDocumentNum">Проверьте введенные данные</div>
-                <input type="text" name="issue" v-model.lazy="post.issue" @blur="touched.issue=true" placeholder="Кем выдан" class="input_size_large">
-                
-                <div class="error" v-if="invalidIssue">Проверьте введенные данные</div>
-                <input type="date" name="IssueDate" v-model.lazy="post.IssueDate"  @blur="touched.IssueDate=true" class="input_size_small">
-                <div class="error" v-if="invalidIssueDate">Проверьте введенные данные</div>
-            </div>
+                    <select name="doctype" id="doctype" v-model="post.doctype" class="selector">
+                        <option value=""> Тип документа</option>
+                        <option value="Паспорт"> Паспорт</option>
+                        <option value="Свидетельство о рождении"> Свидетельство о рождении</option>
+                        <option value="Вод. удостоверение">Вод. удостоверение</option>
+                    </select>
+                    <div class="error" v-if="invalidDoctype">Выберите тип документа</div>
+                    <input type="text" name="documentSerie" v-model.lazy="post.documentSerie"
+                        @blur="touched.documentSerie=true" placeholder="Серия" class="input_size_small">
 
-        </div>
-        <input type="submit"  v-model="btn" class="btn" value="Отправить">
+                    <div class="error" v-if="invalidDocumentSerie">Проверьте введенные данные</div>
+                    <input type="number" name="documentNum" v-model.lazy="post.documentNum"
+                        @blur="touched.documentNum=true" placeholder="Номер" class="input_size_small">
+
+                    <div class="error" v-if="invalidDocumentNum">Проверьте введенные данные</div>
+                    <input type="text" name="issue" v-model.lazy="post.issue" @blur="touched.issue=true"
+                        placeholder="Кем выдан" class="input_size_large">
+
+                    <div class="error" v-if="invalidIssue">Проверьте введенные данные</div>
+                    <input type="date" name="IssueDate" v-model.lazy="post.IssueDate" @blur="touched.IssueDate=true"
+                        class="input_size_small">
+                    <div class="error" v-if="invalidIssueDate">Проверьте введенные данные</div>
+                </div>
+
+            </div>
+            <input type="submit" v-model="btn" class="btn" value="Отправить">
         </form>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
